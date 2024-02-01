@@ -9,6 +9,11 @@ Prerequisites
 - Python 3.x
 - pandas
 - scikit-learn
+- Dataset
+
+Dataset
+The dataset used for this project is stored in the file dataset.csv. It contains comments and their corresponding emotions. Here are a few examples from the dataset:
+
 
 Installation
 
