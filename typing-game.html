@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        #text-display {
+            margin: 20px 0;
+            font-size: 20px;
+            white-space: pre-wrap;
+        }
+
+        #user-input {
+            width: 300px;
+            height: 40px;
+            font-size: 16px;
+            padding: 5px;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+
+        .highlight {
+            background-color: yellow;
+            display: inline;
+        }
+
+        .wrong {
+            background-color: red;
+            display: inline;
+        }
+    </style>
+    <title>Typing Game</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Typing Game</h1>
+        <div id="text-display"></div>
+        <div>
+            <input type="text" id="user-input" placeholder="Type here...">
+        </div>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            typingGame();
+        });
+
+        var texts = [
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+            "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.",
+            "In hac habitasse platea dictumst. Etiam auctor, nunc id aliquam lacinia, nisl nunc tincidunt urna, vitae luctus nunc nunc id nunc.",
+            "Nullam id justo sed nunc lacinia aliquet. Nulla facilisi. Sed euismod, nunc id aliquam lacinia, nisl nunc tincidunt urna, vitae luctus nunc nunc id nunc.",
+            "Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Sed euismod, nunc id aliquam lacinia, nisl nunc tincidunt urna, vitae luctus nunc nunc id nunc."
+        ];
+
+        var textDisplay = document.getElementById("text-display");
+        var userInput = document.getElementById("user-input");
+        var result = document.getElementById("result");
+
+        function typingGame() {
+            var text = texts[Math.floor(Math.random() * texts.length)];
+            textDisplay.textContent = text;
+
+            var startTime = new Date().getTime();
+
+            userInput.addEventListener("input", function () {
+                var typedText = userInput.value;
+                var highlightedText = "";
+                var remainingText = text;
+
+                for (var i = 0; i < typedText.length; i++) {
+                    if (typedText[i] === text[i]) {
+                        highlightedText += "<span class='highlight'>" + typedText[i] + "</span>";
+                    } else {
+                        highlightedText += "<span class='wrong'>" + typedText[i] + "</span>";
+                    }
+                }
+
+                remainingText = remainingText.substr(typedText.length);
+
+                textDisplay.innerHTML = highlightedText + remainingText;
+
+                var endTime = new Date().getTime();
+                var timeTaken = (endTime - startTime) / 1000;
+                var typingSpeed = Math.round((text.length / timeTaken) * 60);
+
+                result.textContent = "Typing speed: " + typingSpeed + " characters per minute";
+            });
+        }
+    </script>
+</body>
+</html>
